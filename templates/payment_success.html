@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<style>
+
+	.hero-wrap {
+        height: 350px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+    }
+
+	.hero-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+	.hero-wrap .container {
+        position: relative;
+        z-index: 2;
+    }
+
+	.hero-wrap h1,
+    .hero-wrap p,
+    .hero-wrap a {
+        color: #fff;
+    }
+
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+          	    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home </a></span>|<span> Payment</span></p>
+                <h1 class="mb-0 bread">Payment</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5 text-center border border-3 border-success w-25 p-5 rounded">
+    <i class="fa-solid fa-circle-check text-success" style="font-size: 30px;"></i>
+    <h3 class="text-success" style="font-family: cursive;">Payment Successful</h3>
+    <p style="font-family: cursive;">Thank you for your Payment</p>
+    <a href="{% url 'shop:categories' %}" style="font-family: cursive;">Go to Home</a>
+</div>
+{% endblock %}

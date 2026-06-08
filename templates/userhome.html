@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block header %}
+<style>
+
+	.hero-wrap {
+        height: 350px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+    }
+
+	.hero-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+	.hero-wrap .container {
+        position: relative;
+        z-index: 2;
+    }
+
+	.hero-wrap h1,
+    .hero-wrap p,
+    .hero-wrap a {
+        color: #fff;
+    }
+
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+          	    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home </a></span>|<span> User</span></p>
+                <h1 class="mb-0 bread">User</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container border border-success rounded" style="margin-top: 70px; margin-bottom: 70px;">
+	<div class="row justify-content-center mt-3 mb-3 p-4">
+        <div class="col-md-12 heading-section text-center ftco-animate">
+            <h2 class="mb-4" style="font-family: cursive;">User Home</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}

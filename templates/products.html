@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<style>
+
+	.hero-wrap {
+        height: 350px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+    }
+
+	.hero-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+	.hero-wrap .container {
+        position: relative;
+        z-index: 2;
+    }
+
+	.hero-wrap h1,
+    .hero-wrap p,
+    .hero-wrap a {
+        color: #fff;
+    }
+
+	.product {
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+	.product:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+	.img-prod {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+        padding: 15px;
+    }
+
+	.product-img {
+        width: 100%;
+        height: 220px;
+        object-fit: contain;
+        background: #fff;
+        transition: transform 0.4s ease;
+    }
+
+	.product:hover .product-img {
+        transform: scale(1.05);
+    }
+
+	.overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        transition: 0.3s ease;
+    }
+
+	.product:hover .overlay {
+        opacity: 1;
+    }
+
+	.product .text {
+        padding: 18px;
+    }
+
+	.product h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+	.product h3 a {
+        color: #222;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+	.product h3 a:hover {
+        color: #28a745;
+    }
+
+	.price {
+        margin-bottom: 15px;
+    }
+
+	.price-sale {
+        font-size: 20px;
+        font-weight: bold;
+        color: #28a745;
+    }
+
+	.bottom-area {
+        margin-top: 10px;
+    }
+
+	.bottom-area a {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #f8f9fa;
+        color: #333;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+	.bottom-area a:hover {
+        background: #28a745;
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({{products.image.url}});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+          	    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home </a></span>|<span> {{products.name}}</span></p>
+                <h1 class="mb-0 bread">{{products.name}}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="ftco-section">
+    <div class="container">
+    	<div class="row">
+        {% for j in products.products.all %}
+    		<div class="col-md-6 col-lg-3 ftco-animate">
+    			<div class="product shadow-sm">
+    				<a href="#" class="img-prod"><img src="{{j.image.url}}" class="product-img">
+    					<div class="overlay"></div>
+    				</a>
+    				<div class="text text-center">
+    					<h3><a href="#">{{j.name}}</a></h3>
+    					<div class="pricing">
+		    				<p class="price"><span class="price-sale">&#8377; {{j.price}}</span></p>
+		    			</div>
+	    				<div class="bottom-area d-flex justify-content-center">
+	    					<a href="{% url 'shop:productdetail' j.id %}" class="d-flex justify-content-center align-items-center text-center">
+	    						<span><i class="ion-ios-menu"></i></span>
+	    					</a>
+	    					<a href="#" class="d-flex justify-content-center align-items-center mx-1">
+	    						<span><i class="ion-ios-cart"></i></span>
+	    					</a>
+	    					<a href="#" class="d-flex justify-content-center align-items-center ">
+	    						<span><i class="ion-ios-heart"></i></span>
+	    					</a>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+        {% endfor %}
+    	</div>
+    </div>
+</section>
+{% endblock %}

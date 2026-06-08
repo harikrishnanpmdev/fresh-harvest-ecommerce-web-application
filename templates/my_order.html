@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<style>
+
+	.hero-wrap {
+        height: 350px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+    }
+
+	.hero-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+	.hero-wrap .container {
+        position: relative;
+        z-index: 2;
+    }
+
+	.hero-wrap h1,
+    .hero-wrap p,
+    .hero-wrap a {
+        color: #fff;
+    }
+
+    .order-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        transition: 0.3s ease;
+    }
+
+    .order-card:hover {
+        transform: translateY(-5px);
+    }
+
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+          	    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home </a></span>|<span> Orders</span></p>
+                <h1 class="mb-0 bread">My Orders</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="ftco-section">
+    <div class="container">
+    {% for i in orders %}
+    <div class="order-card mb-5">
+        <div class="mb-2">
+            <b>Order ID :</b> {{i.order_id}}
+        </div>
+        <div class="mb-2">
+            <b>Order Amount :</b> &#8377; {{i.order_amount}}
+        </div>
+        <div class="mb-2">
+            <b>Ordered On :</b> {{i.ordered_date}}
+        </div>
+        <div class="mb-2">
+            <b>Delivery Status :</b><span class="text-success"> {{i.delivery_status}}</span>
+        </div>
+        {% for j in i.items.all %}
+        <div class="mt-4 border border-2 rounded">
+        <div class="card">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="{{j.product.image.url}}" class="img-fluid rounded">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Product Name : {{j.product.name}}</h5>
+                        <h5 class="card-title">Price : &#8377; {{j.product.price}}</h5>
+                        <h5 class="card-title">Quantity : {{j.quantity}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}

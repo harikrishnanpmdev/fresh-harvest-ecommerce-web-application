@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<style>
+
+	.hero-wrap {
+        height: 350px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+    }
+
+	.hero-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+	.hero-wrap .container {
+        position: relative;
+        z-index: 2;
+    }
+
+	.hero-wrap h1,
+    .hero-wrap p,
+    .hero-wrap a {
+        color: #fff;
+    }
+
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+          	    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home </a></span>|<span> Payment</span></p>
+                <h1 class="mb-0 bread">Payment</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if payment %}
+<div class="container mt-5 mb-5 text-center">
+    <form action="{% url 'cart:success' %}" method="POST">
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="REMOVED_RAZORPAY_KEY_ID"
+            data-amount="{{payment.amount}}"
+            data-currency="INR"
+            data-order_id="{{payment.id}}"
+            data-buttontext="Pay with Razorpay"
+            data-name="{{order.user.username}}"
+            data-description="Payment"
+            data-image="https://example.com/your_logo.jpg"
+            data-prefill.name="{{order.user.first_name}}"
+            data-prefill.email="{{order.user.email}}"
+            data-theme.color="#82ae46">
+        </script>
+    </form>
+</div>
+{% else %}
+<div class="container mt-5 mb-5 text-center border border-3 border-success p-4 w-50 rounded">
+    <h2 class="text-success" style="font-family: cursive;">Order Placed Successfully<i class="fa-solid fa-circle-check"></i></h2>
+    <a href="{% url 'shop:categories' %}" style="color: rgb(83, 83, 212); font-family: cursive;">Continue Shopping</a>
+</div>
+{% endif %}
+{% endblock %}

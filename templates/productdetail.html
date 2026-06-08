@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block header %}
+<style>
+
+	.hero-wrap {
+        height: 350px;
+        background-size: cover;
+        background-position: center center;
+        position: relative;
+    }
+
+	.hero-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+    }
+
+	.hero-wrap .container {
+        position: relative;
+        z-index: 2;
+    }
+
+	.hero-wrap h1,
+    .hero-wrap p,
+    .hero-wrap a {
+        color: #fff;
+    }
+
+	.price {
+        margin-bottom: 15px;
+    }
+
+	.price-sale {
+        font-size: 20px;
+        font-weight: bold;
+        color: #28a745;
+    }
+
+</style>
+<div class="hero-wrap hero-bread" style="background-image: url({% static 'images/bg_1.jpg' %});">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+          	    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home </a></span>|<span> Product Detail</span></p>
+                <h1 class="mb-0 bread">Product Detail</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="ftco-section">
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-6 mb-5 ftco-animate">
+				<div class="product-image-box">
+    				<a href="{{product.image.url}}" class="image-popup">
+						<img src="{{product.image.url}}" class="img-fluid product-image">
+					</a>
+				</div>
+    		</div>
+    		<div class="col-lg-6 ftco-animate">
+				<div class="product-details">
+    				<h3>{{product.name}}</h3>
+    				<p class="price">
+						<span class="price-sale text-primary">&#8377; {{product.price}}</span>
+					</p>
+    				<p style="text-align: justify;">
+						{{product.description}}
+					</p>
+					<div class="row mt-4">
+	          	        <div class="col-md-12">
+	          		        <p style="color: #000;">
+								{% if product.stock > 0 %}
+									{{product.stock}}  Items Available
+								{% else %}
+									
+								{% endif %}
+							</p>
+	          	        </div>
+          	        </div>
+					{% if user.is_superuser == True %}
+          	        <p>
+						<a href="{% url 'shop:addstock' product.id %}" class="btn btn-primary py-3 px-4">Add Stock</a>
+					</p>
+					{% else %}
+					{% if product.stock > 0 %}
+					<p>
+						<a href="{% url 'cart:addtocart' product.id %}" class="btn btn-primary py-3 px-4">Add to Cart</a>
+					</p>
+					{% else %}
+					<p>
+						<a href="#" class="btn btn-primary py-3 px-4">Out  Of  Stock</a>
+					</p>
+					{% endif %}
+					{% endif %}
+				</div>
+    		</div>
+    	</div>
+    </div>
+</section>
+{% endblock %}
