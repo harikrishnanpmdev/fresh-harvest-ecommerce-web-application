@@ -8,7 +8,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from cart.models import Order,OrderItems
 import uuid
+from django.contrib.auth.decorators import login_required
+from shop.decorators import user_required
 
+@method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class AddToCart(View):
     def get(self, request, i):
         u=request.user
@@ -31,6 +35,8 @@ class AddToCart(View):
 
         return redirect('cart:cartview')
 
+@method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class CartView(View):
     def get(self, request):
         u=request.user
@@ -76,7 +82,9 @@ class CartDelete(View):
         except:
             pass
         return redirect('cart:cartview')
-    
+
+@method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class CheckOut(View):
     def get(self, request):
         form_instance=OrderForm()
@@ -155,6 +163,8 @@ class PaymentSuccess(View):
         o.delete()
         return render(request, 'payment_success.html')
 
+@method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class MyOrder(View):
     def get(self, request):
         u=request.user

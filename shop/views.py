@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 from shop.forms import RegisterForm,LoginForm,CategoryForm,ProductForm,StockForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from shop.models import Category,Product
+from shop.decorators import admin_required, user_required
 
 class Categories(View):
     def get(self, request):
@@ -17,10 +20,14 @@ class Products(View):
         context={'products': p}
         return render(request, 'products.html', context)
 
+@method_decorator(admin_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class Adminhome(View):
     def get(self, request):
         return render(request, 'adminhome.html')
-    
+
+@method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class Userhome(View):
     def get(self, request):
         return render(request, 'userhome.html')
@@ -64,7 +71,9 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('shop:login')
-    
+
+@method_decorator(admin_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class AddCategory(View):
     def get(self, request):
         form_instance= CategoryForm()
@@ -76,7 +85,9 @@ class AddCategory(View):
         if form_instance.is_valid():
             form_instance.save()
             return redirect('shop:categories')
-        
+
+@method_decorator(admin_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class AddProduct(View):
     def get(self, request):
         form_instance= ProductForm()
@@ -94,7 +105,9 @@ class ProductDetail(View):
         p=Product.objects.get(id=i)
         context={'product': p}
         return render(request, 'productdetail.html', context)
-    
+
+@method_decorator(admin_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class AddStock(View):
     def get(self, request, i):
         p=Product.objects.get(id=i)
