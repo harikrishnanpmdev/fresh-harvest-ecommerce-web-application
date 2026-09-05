@@ -4,6 +4,7 @@ from shop.models import Product
 from cart.models import Cart
 from cart.forms import OrderForm
 import razorpay
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from cart.models import Order,OrderItems
@@ -111,7 +112,7 @@ class CheckOut(View):
             if f.payment_method=="Online":
                 
                 # create a razorpay client connection using keys
-                client=razorpay.Client(auth=('REMOVED_RAZORPAY_KEY_ID','REMOVED_RAZORPAY_SECRET'))
+                client=razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
                 # create a new order in razorpay
                 response_payment = client.order.create({
